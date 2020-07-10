@@ -30,7 +30,11 @@
         // append contents
         var postElements = this.response.querySelectorAll('.post-card');
         postElements.forEach(function (item) {
-            feedElement.appendChild(item);
+            // document.importNode is important, without it the item's owner
+            // document will be different which can break resizing of
+            // `object-fit: cover` images in Safari
+            // see https://github.com/TryGhost/Casper/commit/307c334cd59d099097fc11064799321ba7e8e50d
+            feedElement.appendChild(document.importNode(item, true));
         });
 
         // set next link
